@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync,writeFileSync,mkdtempSync,rmSync,readdirSync} from 'node:fs';
+import {readFileSync,writeFileSync,chmodSync,mkdtempSync,rmSync,readdirSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {sail,coldVerify} from '../src/first-foreign-ship-004.mjs';
@@ -53,6 +53,7 @@ test('cold verifier rejects bytes corrupted inside the native TranchNode object 
  const evidence=JSON.parse(readFileSync(join(args.root,'evidence','manifest.json'),'utf8'));
  const addr=evidence.nativeCargoAddress;const digest=addr.slice(7);
  const path=join(args.root,'native-tranchnode','objects','sha256',digest.slice(0,2),digest.slice(2,4),digest);
+ chmodSync(path,0o600); // hostile filesystem owner deliberately defeats read-only mode
  writeFileSync(path,Buffer.from('bad cargo'));
  await assert.rejects(coldVerify(args),/ARTIFACT_CORRUPTION|NATIVE_TRANCHNODE_CORRUPTION/);
 });
