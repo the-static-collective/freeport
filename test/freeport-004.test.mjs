@@ -55,7 +55,7 @@ test('cold verifier rejects bytes corrupted inside the native TranchNode object 
  const path=join(args.root,'native-tranchnode','objects','sha256',digest.slice(0,2),digest.slice(2,4),digest);
  chmodSync(path,0o600); // hostile filesystem owner deliberately defeats read-only mode
  writeFileSync(path,Buffer.from('bad cargo'));
- await assert.rejects(coldVerify(args),/ARTIFACT_CORRUPTION|NATIVE_TRANCHNODE_CORRUPTION/);
+ await assert.rejects(coldVerify(args),error=>error.code==='ARTIFACT_CORRUPTION');
 });
 test('the destination source remains distinct, no live SupaBardo schema is created',async t=>{
  if(!enabled){t.skip('requires original native code');return}
