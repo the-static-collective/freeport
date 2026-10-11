@@ -1,0 +1,59 @@
+name: FREEPORT 005 — Supabase harbor is an unverified discovery hint
+on:
+  push:
+    branches:
+      - experiment/freeport-005-supabase-harbor-signals
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  native-first-foreign-ship:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: freeport
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: the-static-collective/tranchnode
+          ref: 7fbb0c868befd5f6a7478bdd0447477a0e8e075e
+          path: tranchnode
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: the-static-collective/reLATTE
+          ref: dcc8cdca84c440aa4294134f020fb7095bf87f24
+          path: relatte
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install original TranchNode TSX runtime
+        run: cd tranchnode && npm ci --ignore-scripts --no-audit --no-fund
+      - name: Install original reLATTE canonicalization dependency
+        run: cd relatte && npm install --package-lock=false --ignore-scripts --no-audit --no-fund
+      - name: Verify FREEPORT 003 and 005 hostile boundary invariants
+        run: cd freeport && npm test
+      - name: Native FREEPORT 004 baseline with original donor code and hostile tampering
+        env:
+          FREEPORT_004_TRANCHNODE: ${{ github.workspace }}/tranchnode
+          FREEPORT_004_RELATTE: ${{ github.workspace }}/relatte
+        run: |
+          cd freeport
+          node --import "$FREEPORT_004_TRANCHNODE/node_modules/tsx/dist/loader.mjs" --test test/freeport-004.test.mjs
+      - name: Separate original-code shipment issuance and independent cold verification
+        env:
+          FREEPORT_004_TRANCHNODE: ${{ github.workspace }}/tranchnode
+          FREEPORT_004_RELATTE: ${{ github.workspace }}/relatte
+        run: |
+          cd freeport
+          node --import "$FREEPORT_004_TRANCHNODE/node_modules/tsx/dist/loader.mjs" scripts/first-foreign-ship-004.mjs run /tmp/freeport004 "$FREEPORT_004_TRANCHNODE" "$FREEPORT_004_RELATTE"
+          node --import "$FREEPORT_004_TRANCHNODE/node_modules/tsx/dist/loader.mjs" scripts/first-foreign-ship-004.mjs verify /tmp/freeport004 "$FREEPORT_004_TRANCHNODE" "$FREEPORT_004_RELATTE"
+      - name: Publish synthetic baseline manifest only; no Supabase contact or private cargo
+        uses: actions/upload-artifact@v4
+        with:
+          name: freeport005-synthetic-offline-harbor-and-native-cargo
+          if-no-files-found: error
+          path: /tmp/freeport004/evidence/manifest.json

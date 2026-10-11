@@ -66,3 +66,21 @@ No live Supabase is contacted; the private Autodiscography archive is not import
 An additional [GitHub Actions integration](.github/workflows/freeport-004.yml) clones exact original donor commits, runs the original 003 tests and independent hostile 004 tests, plus a separate CLI cold replay.
 
 **FREEPORT 003 remains self-contained. FREEPORT 004 is a pinned independent donor integration, not a new mandatory central service.**
+
+## FREEPORT 005 — Supabase Harbor (read-only reconnaissance and offline notice gate)
+
+[Harbor design and Supabase audit](docs/FREEPORT-005-SUPABASE-HARBOR.md)
+
+The deployed Supabase account already contains a **13-node Maxhinal mesh across WITNESS and pantry-gate**; nodes include a **Pirate Clerk** (custody != ownership), a **Ferryman** (ferryman != destination), and a Gate. This does **not** mean their existing ordinary ingress is appropriate for Freeport: the deployed MX13 local constitutions can automatically ADMIT certain crossings. FREEPORT 005 keeps it strictly observational.
+
+The new `observeHarborSignal` offline parser treats any short-lived purported Supabase notification as `UNVERIFIED_HINT`, never receipt verification, transit authorization, cargo access or an admission verdict. Oversized scopes, smuggled payloads, unknown fields, expired announcements and ownership-looking claims quarantine. The harbor parser **does not open a network connection or deploy any schema**. Existing WITNESS and pantry-gate are unchanged; no secret keys or user data have been read into the repository.
+
+The next true live experiment will require explicit separate project/scope authorization and real private-channel and RLS tests. It must not quietly repurpose the live MX13 mesh, personal WITNESS data or the inactive autodiscography project.
+
+## FREEPORT 005 — Supabase harbor signals (unverified hints)
+
+[Read the live read-only Supabase inventory, security boundaries and proposal](docs/FREEPORT-005-SUPABASE.md).
+
+WITNESS and pantry-gate already have **MAXHINAL 13** private mesh and operational Edge functions. FREEPORT 005 **does not** connect to or mutate either project. It adds a narrow, bounded signal parser: a declared four-event Realtime-style notice about crossing reference, cargo address and expiry can produce only an `UNVERIFIED_HINT`, never custody, execution, destination ADMIT, creative KEEP or a verified receipt. The GitHub workflow runs hostile schema/TTL/capability tests plus the native FREEPORT 004 TranchNode/reLATTE baseline.
+
+**No live Supabase deployment, migration, broadcast, personal archive import or private WITNESS payload.**
