@@ -84,3 +84,11 @@ The next true live experiment will require explicit separate project/scope autho
 WITNESS and pantry-gate already have **MAXHINAL 13** private mesh and operational Edge functions. FREEPORT 005 **does not** connect to or mutate either project. It adds a narrow, bounded signal parser: a declared four-event Realtime-style notice about crossing reference, cargo address and expiry can produce only an `UNVERIFIED_HINT`, never custody, execution, destination ADMIT, creative KEEP or a verified receipt. The GitHub workflow runs hostile schema/TTL/capability tests plus the native FREEPORT 004 TranchNode/reLATTE baseline.
 
 **No live Supabase deployment, migration, broadcast, personal archive import or private WITNESS payload.**
+
+## FREEPORT 006 — Branch Harbor / First Graft
+
+[Read the native branch-graft specimen](docs/FREEPORT-006-BRANCH-HARBOR.md).
+
+Two actual public, exact-commit-pinned source branches (CANNON STACK² 017 and Static Workbench OLD-GROWTH 002) are preserved as independent inert amber cells. An operator explicitly permits one bounded literal join. The original Workbench OLD-GROWTH calculator proposes an **unrun** graft, and the original GHoT manifest mechanism runs a **Freeport-owned fixed digest-only synthetic check**, never arbitrary foreign branch modules. The proposed candidate is held as new foreign cargo, offered for review, then **HOLD**ed by a separate destination-owned gate. Native cold replay verifies exact original Git blobs, original Workbench and GHoT results, local Freeport signed custody receipts, and the destination decision.
+
+The proposed `experiment/branch-harbor-review-...` name is **not a Git branch that was created**. No source repository modification, foreign code execution, merge, publication, automatic canon selection, private archive import, live Supabase interaction, or deployment happens.
