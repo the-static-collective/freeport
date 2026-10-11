@@ -33,7 +33,7 @@ jobs:
       - name: Install original TranchNode TSX runtime
         run: cd tranchnode && npm ci --ignore-scripts --no-audit --no-fund
       - name: Install original reLATTE canonicalization dependency
-        run: cd relatte && npm ci --ignore-scripts --no-audit --no-fund
+        run: cd relatte && npm install --package-lock=false --ignore-scripts --no-audit --no-fund
       - name: Verify original FREEPORT 003 hostile invariants
         run: cd freeport && npm test
       - name: Re-execute original TranchNode and original reLATTE with synthetic cargo and hostile mutations
