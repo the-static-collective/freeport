@@ -66,3 +66,13 @@ No live Supabase is contacted; the private Autodiscography archive is not import
 An additional [GitHub Actions integration](.github/workflows/freeport-004.yml) clones exact original donor commits, runs the original 003 tests and independent hostile 004 tests, plus a separate CLI cold replay.
 
 **FREEPORT 003 remains self-contained. FREEPORT 004 is a pinned independent donor integration, not a new mandatory central service.**
+
+## FREEPORT 005 — Supabase Harbor (read-only reconnaissance and offline notice gate)
+
+[Harbor design and Supabase audit](docs/FREEPORT-005-SUPABASE-HARBOR.md)
+
+The deployed Supabase account already contains a **13-node Maxhinal mesh across WITNESS and pantry-gate**; nodes include a **Pirate Clerk** (custody != ownership), a **Ferryman** (ferryman != destination), and a Gate. This does **not** mean their existing ordinary ingress is appropriate for Freeport: the deployed MX13 local constitutions can automatically ADMIT certain crossings. FREEPORT 005 keeps it strictly observational.
+
+The new `observeHarborSignal` offline parser treats any short-lived purported Supabase notification as `UNVERIFIED_HINT`, never receipt verification, transit authorization, cargo access or an admission verdict. Oversized scopes, smuggled payloads, unknown fields, expired announcements and ownership-looking claims quarantine. The harbor parser **does not open a network connection or deploy any schema**. Existing WITNESS and pantry-gate are unchanged; no secret keys or user data have been read into the repository.
+
+The next true live experiment will require explicit separate project/scope authorization and real private-channel and RLS tests. It must not quietly repurpose the live MX13 mesh, personal WITNESS data or the inactive autodiscography project.
