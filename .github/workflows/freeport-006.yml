@@ -1,0 +1,67 @@
+name: FREEPORT 006 — Branch Harbor native graft and review HOLD
+on:
+  push:
+    branches:
+      - experiment/freeport-006-first-branch-graft
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  graft-source-pinned:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Freeport
+        uses: actions/checkout@v4
+        with:
+          path: freeport
+          persist-credentials: false
+      - name: Native CANNON branch specimen
+        uses: actions/checkout@v4
+        with:
+          repository: the-static-collective/CANNON
+          ref: 3aa5b0d0e9403e90affe05ec4056825e8d166fe4
+          path: cannon
+          persist-credentials: false
+      - name: Native Static Workbench graft engine and source branch
+        uses: actions/checkout@v4
+        with:
+          repository: the-static-collective/static-workbench
+          ref: 16b0d5a2eb9c4c9b7da27f9ee1d8d8ba422a35a2
+          path: workbench
+          persist-credentials: false
+      - name: Native GHoT explicit external adapter mechanism
+        uses: actions/checkout@v4
+        with:
+          repository: the-static-collective/GHoT
+          ref: e12ce3e62486feb1e5cd2324d1ae5a6a2be8b19b
+          path: ghot
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: FREEPORT 003 and 005 safety tests plus real 006 donor integration
+        env:
+          FREEPORT_006_CANNON: ${{ github.workspace }}/cannon
+          FREEPORT_006_WORKBENCH: ${{ github.workspace }}/workbench
+          FREEPORT_006_GHOT: ${{ github.workspace }}/ghot
+        run: |
+          cd freeport
+          npm test
+      - name: Separate original-code issuance and cold replay
+        env:
+          FREEPORT_006_CANNON: ${{ github.workspace }}/cannon
+          FREEPORT_006_WORKBENCH: ${{ github.workspace }}/workbench
+          FREEPORT_006_GHOT: ${{ github.workspace }}/ghot
+        run: |
+          cd freeport
+          node scripts/branch-graft-006.mjs run /tmp/freeport006 "$FREEPORT_006_CANNON" "$FREEPORT_006_WORKBENCH" "$FREEPORT_006_GHOT"
+          node scripts/branch-graft-006.mjs verify /tmp/freeport006 "$FREEPORT_006_CANNON" "$FREEPORT_006_WORKBENCH" "$FREEPORT_006_GHOT"
+      - name: Public review manifest (no raw code, excerpts, signing secrets)
+        uses: actions/upload-artifact@v4
+        with:
+          name: freeport006-public-branch-graft-manifest
+          if-no-files-found: error
+          path: /tmp/freeport006/evidence/manifest.json
