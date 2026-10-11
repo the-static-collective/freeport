@@ -54,3 +54,15 @@ Its local storage is **not yet** the actual TranchNode implementation. Its recei
 `FREEPORT-004`: original TranchNode immutable store as an optional carrier, reLATTE signed receipt crossings as an optional transport envelope, and an independently owned destination import gate. The SupaBardo nonfinal state may precede or bridge those activities, but should never become immortal warehouse storage.
 
 **Residence != trust. Co-residence != interaction. Transformation != admission. Re-export != adoption. Receipt != authority.**
+
+## FREEPORT 004 — First Foreign Ship
+
+[Original-code integration and its boundaries](docs/FREEPORT-004.md)
+
+This next specimen uses the **real**, SHA-pinned native TranchNode filesystem CAS and **real** reLATTE P-256 crossing/receipt library. Two synthetic parcels enter Freeport; one authorized fixed text composition becomes a derived foreign child; native TranchNode stores the exact child bytes. A source-world **port custody** signer releases it via a native signed reLATTE crossing. A separately signed **offline SupaBardo-shaped OPEN / WAIT** witnesses unresolved transit, then World C's own separate gate deliberately **HOLDs** the cargo and signs native `R3_HOLD`. Bardo signs a nonsemantic EXIT; its synthetic staging folder is deleted. Original donor code cold-verifies the signatures and TranchNode bytes afterward.
+
+No live Supabase is contacted; the private Autodiscography archive is not imported; original creator rights are not attested; host re-export is not host adoption; recipient HOLD is not creative KEEP, admission or execution.
+
+An additional [GitHub Actions integration](.github/workflows/freeport-004.yml) clones exact original donor commits, runs the original 003 tests and independent hostile 004 tests, plus a separate CLI cold replay.
+
+**FREEPORT 003 remains self-contained. FREEPORT 004 is a pinned independent donor integration, not a new mandatory central service.**
