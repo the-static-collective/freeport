@@ -1,0 +1,8 @@
+{
+  "name": "@the-static-collective/freeport",
+  "version": "0.0.1-experiment",
+  "private": true,
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {"test": "node --test test/*.test.mjs", "demo": "node examples/freeport-003.mjs"}
+}
