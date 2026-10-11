@@ -1,0 +1,23 @@
+name: FREEPORT 003 — bounded inert cargo and destination autonomy
+on:
+  push:
+    branches:
+      - main
+      - experiment/freeport-003-bonded-garden
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  local-freeport:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Bounded hostile fixtures and cold verifier
+        run: npm test
+      - name: Synthetic bonded garden demonstration
+        run: npm run demo
