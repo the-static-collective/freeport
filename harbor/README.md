@@ -50,15 +50,22 @@ Read locally:
 
 On Windows PowerShell use py -3 instead of python3, with a conventional Windows --root path. Ingest duplicates source bytes into the private HOLD; release copies again to PUBLIC. **Don't bulk-copy ~225 videos without checking free space.** Inventory first with the HUMKIN offline scanner.
 
-## Serving the public without opening home router ports
+## Public HTTPS: supported routes and restrictions
 
-The server binds **127.0.0.1 only**. An outbound Cloudflare Tunnel can publish that loopback service as HTTPS without open router ports, if the host's OS supports the current cloudflared agent. Cloudflare's documented Quick Tunnel syntax for short experiments is:
+The server binds **127.0.0.1 only**. For a *small pilot*, current Tailscale **Funnel** can expose this local HTTP service publicly over HTTPS without opening home router ports. Tailscale documents a beta service, a public ts.net hostname, availability across plans and **non-configurable bandwidth limits**. Anyone with the URL can reach the published-only server.
 
 ~~~sh
-cloudflared tunnel --url http://127.0.0.1:8766
+# After installing and setting up Tailscale on a supported computer:
+tailscale funnel 8766
 ~~~
 
-Quick Tunnel hostnames are temporary. Restart the server with --public-base set to the **actual** HTTPS hostname Cloudflare gives you; do not use a guessed or fictional hostname. Named tunnels/custom-domain routing need separate setup and, for Cloudflare's custom hostname path, the domain on Cloudflare. We do not change HUMKIN DNS or the user's router as part of this branch.
+Use the **actual** HTTPS hostname printed by Tailscale as the server's --public-base. Configure HUMKIN's empty opt-in sources registry only after that hostname is confirmed and the owner intentionally releases a cleared file. Funnel is for tests and small files, **not a guaranteed unlimited community video CDN**.
+
+**Cloudflare Tunnel correction (verified Nov 13, 2026):** Cloudflare's current video-delivery policy explicitly says *public hostname routes through Tunnel on Free, Pro and Business plans are subject to restrictions on serving video and disproportionate large files.* Therefore **do not use a free Cloudflare public Tunnel to serve the Commons' videos at scale**. A paid video/storage delivery product or a truly DNS-only/direct origin is a separate route. Official policy: https://developers.cloudflare.com/fundamentals/reference/policies-compliances/delivering-videos-with-cloudflare/
+
+For a durable home-origin route without Cloudflare's video proxy, a patched server can use **Caddy reverse proxy** with automatic HTTPS and an owned DNS name. This generally needs Internet-reachable ports 80/443, router/firewall configuration, and a usable public address (CGNAT can block it). Caddy can proxy to the Python loopback service. **Do not forward 8766 directly, do not run unsupported legacy OSes as exposed public gateways, and do not change current HUMKIN domain records without a separately verified migration.** Official quick-start: https://caddyserver.com/docs/quick-starts/reverse-proxy
+
+Later, a dedicated media/object-storage host is more reliable than one consumer broadband connection. Whichever route you choose, private HOLD is never served.
 
 The public handler supports GET and HEAD, one HTTP byte Range (including suffix ranges), immutable cache headers for hashed objects, a bounded concurrent stream count (3), and per-response throttling (1024 KiB/s by default). It refuses POST/PUT/DELETE, unknown paths, held files, unexpected extensions, bad record/hash shapes, and missing public bytes. CORS is available only to the explicitly configured HUMKIN origin. CORS is *not* a confidentiality boundary for freely published bytes.
 
