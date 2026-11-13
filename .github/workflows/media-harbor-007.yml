@@ -1,0 +1,23 @@
+name: FREEPORT 007 media harbor smoke tests
+on:
+  pull_request:
+    paths:
+      - "harbor/**"
+      - ".github/workflows/media-harbor-007.yml"
+  push:
+    branches: [main]
+    paths:
+      - "harbor/**"
+      - ".github/workflows/media-harbor-007.yml"
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Confirm no external dependencies
+        run: python -m py_compile harbor/media_harbor.py
+      - name: Custody, rights and HTTP read tests
+        run: python -m unittest discover -s harbor/tests -v
