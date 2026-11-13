@@ -401,13 +401,19 @@ def mirror(root, destination):
     target = Path(destination).resolve()
     if source == target or source in target.parents or target in source.parents:
         raise ValueError("mirror target must be a separate, non-nested directory")
+    target.mkdir(parents=True, exist_ok=True, mode=0o700)
+    if os.name == "posix":
+        os.chmod(str(target), 0o700)
     copied = 0
     for group in ("hold_obj", "hold_meta", "public_obj", "public_meta"):
         folder = p[group]
         if not folder.is_dir():
             continue
         dest_dir = target / folder.relative_to(source)
-        dest_dir.mkdir(parents=True, exist_ok=True)
+        dest_dir.mkdir(parents=True, exist_ok=True, mode=0o700)
+        if os.name == "posix":
+            os.chmod(str(dest_dir), 0o700)
+            os.chmod(str(dest_dir.parent), 0o700)
         for file in sorted(folder.iterdir()):
             if file.is_symlink() or not file.is_file():
                 continue
@@ -425,6 +431,8 @@ def mirror(root, destination):
                     os.fsync(o.fileno())
                 if sha256(temporary) != original_hash:
                     raise ValueError("mirror checksum mismatch")
+                source_stat = file.stat()
+                os.utime(temporary, ns=(source_stat.st_atime_ns, source_stat.st_mtime_ns))
                 os.replace(temporary, str(dest))
                 copied += 1
             finally:
