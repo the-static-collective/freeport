@@ -1,0 +1,22 @@
+{
+  "source_sha256": "<replace with SHA-256 from ingest>",
+  "title": "<title>",
+  "creator": "<creator/rightsholder>",
+  "attestor": "<person reviewing the original rights>",
+  "attestation": "I attest I have authority to grant the stated public reuse rights",
+  "license_id": "CC-BY-4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "attribution": "<desired credit>",
+  "scope": {
+    "public_redistribution": true,
+    "derivatives": true,
+    "commercial_use": true
+  },
+  "checks": {
+    "source_platform_terms_checked": false,
+    "all_contributors_authorized": false,
+    "third_party_material_cleared": false,
+    "likeness_voice_privacy_checked": false
+  },
+  "parents": []
+}
