@@ -58,8 +58,14 @@ def paths(root):
 
 def initialize(root):
     p = paths(root)
+    p["root"].mkdir(parents=True, exist_ok=True, mode=0o700)
     for key in ("hold_obj", "hold_meta", "public_obj", "public_meta"):
-        p[key].mkdir(parents=True, exist_ok=True)
+        p[key].mkdir(parents=True, exist_ok=True, mode=0o700)
+    # Local secrets and source filenames stay owner-only on POSIX systems.
+    if os.name == "posix":
+        for path in (p["root"], p["root"] / "hold", p["root"] / "public",
+                     p["hold_obj"], p["hold_meta"], p["public_obj"], p["public_meta"]):
+            os.chmod(str(path), 0o700)
     return p
 
 def atomic_json(path, obj):
@@ -196,6 +202,7 @@ def release(root, key, packet_file, confirmation):
         record = {
             "id": "sha256:" + key, "sha256": key, "filename": key + ext,
             "kind": ALLOWED[ext][1], "size_bytes": dest.stat().st_size,
+            "sealed_mtime_ns": dest.stat().st_mtime_ns,
             "title": packet["title"], "creator": packet["creator"],
             "parents": parents, "availability": "published-cleared",
             "rights": {
@@ -231,7 +238,8 @@ def list_public(root, public_base):
             if record_path.name != key + ".json":
                 continue
             obj = p["public_obj"] / filename
-            if obj.is_symlink() or not obj.is_file() or obj.stat().st_size != r.get("size_bytes"):
+            if (obj.is_symlink() or not obj.is_file() or obj.stat().st_size != r.get("size_bytes")
+                    or obj.stat().st_mtime_ns != r.get("sealed_mtime_ns")):
                 continue
             if r.get("rights", {}).get("status") != "cleared":
                 continue
@@ -336,8 +344,8 @@ def make_handler(root, public_base, cors_origin, kib_per_sec, max_streams):
                 if obj.is_symlink() or not obj.is_file():
                     raise ValueError("object missing or symlink")
                 size = obj.stat().st_size
-                if size <= 0 or size != r.get("size_bytes"):
-                    raise ValueError("public object size changed")
+                if size <= 0 or size != r.get("size_bytes") or obj.stat().st_mtime_ns != r.get("sealed_mtime_ns"):
+                    raise ValueError("public object changed")
             except (OSError, ValueError, json.JSONDecodeError):
                 self.send_error(404, "Not found")
                 return
